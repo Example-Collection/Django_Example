@@ -28,7 +28,7 @@ def article_detail(request, pk):
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = ArticleModelSerializer(article, many=True)
+        serializer = ArticleModelSerializer(article)
         return JsonResponse(serializer.data, safe=False)
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
