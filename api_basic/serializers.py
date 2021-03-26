@@ -39,3 +39,9 @@ class ArticleSerializer(serializers.Serializer):
     # 6. To render more than 1 objects
     # Use the code below.
     # serializer = ArticleSerializer(Article.objects.all(), many=True)
+
+
+class ArticleModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ['id', 'title', 'author', 'email']
