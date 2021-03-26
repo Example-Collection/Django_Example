@@ -1,14 +1,16 @@
+from abc import ABC
+
 from rest_framework import serializers
 from .models import Article
 
 
-class ArticleSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=100)
-    author = serializers.CharField(max_length=100)
-    email = serializers.EmailField(max_length=100)
+class ArticleModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ['id', 'title', 'author', 'email']
 
-    def create(self, validated_data):
-        return Article.objects.create(validated_data)
+    # def create(self, validated_data):
+    #     return Article.objects.create(validated_data)
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
@@ -39,9 +41,3 @@ class ArticleSerializer(serializers.Serializer):
     # 6. To render more than 1 objects
     # Use the code below.
     # serializer = ArticleSerializer(Article.objects.all(), many=True)
-
-
-class ArticleModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Article
-        fields = ['id', 'title', 'author', 'email']

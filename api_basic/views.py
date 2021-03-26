@@ -35,7 +35,7 @@ def article_detail(request, pk):
         serializer = ArticleModelSerializer(article, data=data)
 
         if serializer.is_valid():
-            serializer.update(article, serializer.data)
+            serializer.save()
             return JsonResponse(serializer.data, status=200)
         return JsonResponse(serializer.errors, status=400)
     elif request.method == 'DELETE':
