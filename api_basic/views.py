@@ -34,13 +34,15 @@ class ArticleViewSet(viewsets.ViewSet):
         article = get_object_or_404(queryset, pk=pk)
         serializer = ArticleModelSerializer(article)
         return Response(serializer.data)
-        # try:
-        #     article = Article.objects.get(pk=pk)
-        # except Article.DoesNotExist:
-        #     return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-        # serializer = ArticleModelSerializer(article)
-        # return Response(serializer.data)
 
+    def update(self, request, pk=None):
+        article = Article.objects.get(pk=pk)
+        serializer = ArticleModelSerializer(article, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
