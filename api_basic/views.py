@@ -13,6 +13,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 
+# GenericViewSet
+class ArticleGenericViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    serializer_class = ArticleModelSerializer
+    queryset = Article.objects.all()
+
+
 # ViewSet
 class ArticleViewSet(viewsets.ViewSet):
 
@@ -43,8 +49,6 @@ class ArticleViewSet(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 # Generic Views and Mixins
